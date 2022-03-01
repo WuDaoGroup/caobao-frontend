@@ -30,6 +30,7 @@
 	"dependencies": {
 		"axios": "^0.25.0",
 		"filepond": "^4.30.3",
+		"markdown": "^0.5.0",
 		"svelte-filepond": "^0.2.0"
 	}
 }

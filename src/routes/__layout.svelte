@@ -59,11 +59,7 @@
 
 <SideNav bind:isOpen={isSideNavOpen}>
 	<SideNavItems>
-		<!-- <SideNavLink text="数据导入" href="{base}/data-import" />
-		<SideNavLink text="数据观察" href="{base}/data-observation" />
-		<SideNavLink text="数据预处理" href="{base}/data-preprocessing" />
-		<SideNavLink text="模型构建" href="{base}/model-development" />
-		<SideNavLink text="可解释性" href="{base}/model-interpretable" /> -->
+		<SideNavLink text="算法课程" href="{base}/alg" />
 	</SideNavItems>
 </SideNav>
 
