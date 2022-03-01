@@ -3,12 +3,13 @@
 </style>
 
 <script context="module">
+	import { baseLink } from '../../services/api.js'
 	export const prerender = true;
 	export async function load({ fetch, params }) {
 		let question;
 		try {
 			// here we are gonna fetch the single article by id
-			question = await fetch(`http://localhost:8059/static/alg/${params.slug}.md`);
+			question = await fetch(`${baseLink}/static/alg/${params.slug}.md`);
             question = await question.text()
 			
 		} catch (e) {
@@ -36,7 +37,6 @@
 		ProgressIndicator,
 		ProgressStep
 	} from 'carbon-components-svelte';
-	import { baseLink} from '../../services/api.js'
 	import SvelteMarkdown from 'svelte-markdown'
 	import FilePond from 'svelte-filepond';
     export let question;
@@ -45,7 +45,7 @@
 	let pond;
 	let filename;
 	// the name to use for the internal file input
-	let uploadApiLink = `${baseLink}/files/upload`
+	let uploadApiLink = `${baseLink}/api/v1/files/upload`
 	let name = 'upload_file'; // 这个值就对应了form-data的key
 	// handle filepond events
 	function handleInit() {

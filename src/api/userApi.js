@@ -7,7 +7,7 @@ export const loginApi = async (sid, password) => {
 		let form = new FormData();
 		form.append('sid', sid);
 		form.append('password', password);
-		const response = await api.post(`/students/login`, form);
+		const response = await api.post(`/api/v1/students/login`, form);
 		return response;
 	} catch (err) {
 		console.error(err);
@@ -20,7 +20,7 @@ export const registerApi = async (sid, name, password, info) => {
 		form.append('name', name);
 		form.append('password', password);
 		form.append('info', info);
-		const response = await api.post(`/students/register`, form);
+		const response = await api.post(`/api/v1/students/register`, form);
 		return response;
 	} catch (err) {
 		console.error(err);
