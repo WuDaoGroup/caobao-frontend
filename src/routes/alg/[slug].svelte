@@ -1,19 +1,18 @@
 <script context="module">
-    import {markdown} from 'markdown';
 	export const prerender = true;
 	export async function load({ fetch, params }) {
-		let question, questionHtml;
+		let question;
 		try {
 			// here we are gonna fetch the single article by id
 			question = await fetch(`http://localhost:8059/static/alg/${params.slug}.md`);
             question = await question.text()
-            questionHtml = markdown.toHTML(question)
+			
 		} catch (e) {
 			console.log(e);
 		}
 		return {
 			props: {
-                questionHtml,
+                question,
 				slug: params.slug
 			}
 		};
@@ -21,8 +20,11 @@
 </script>
 
 <script>
-    export let questionHtml;
+	import SvelteMarkdown from 'svelte-markdown'
+    export let question;
+	const source = question;
 </script>
 
-{@html questionHtml}
+<h1>题目</h1>
 
+<SvelteMarkdown {source} />
