@@ -53,12 +53,15 @@
 			required
 			bind:value={sid}
 		/>
-		<TextInput
-			labelText="姓名"
-			placeholder="Enter your name..."
-			required
-			bind:value={name}
-		/>
+		<div class="mt-4">
+			<TextInput
+				labelText="姓名"
+				placeholder="Enter your name..."
+				required
+				bind:value={name}
+			/>
+		</div>
+
 		<div class="mt-4">
 			<RadioButtonGroup
 				legendText={"课程"}
