@@ -2,22 +2,26 @@
 	@import 'filepond/dist/filepond.css';
 </style>
 
+<svelte:head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</svelte:head>
+
 <script context="module">
-	import { baseLink } from '../../services/api.js'
+	import { baseLink } from '../../services/api.js';
 	export const prerender = true;
 	export async function load({ fetch, params }) {
-		let question;
+		let problem;
 		try {
 			// here we are gonna fetch the single article by id
-			question = await fetch(`${baseLink}/static/alg/${params.slug}.md`);
-            question = await question.text()
+			problem = await fetch(`${baseLink}/static/alg/${params.slug}/question.md`);
+            problem = await problem.text()
 			
 		} catch (e) {
 			console.log(e);
 		}
 		return {
 			props: {
-                question,
+                problem,
 				slug: params.slug
 			}
 		};
@@ -39,15 +43,25 @@
 	} from 'carbon-components-svelte';
 	import SvelteMarkdown from 'svelte-markdown'
 	import FilePond from 'svelte-filepond';
-    export let question;
-	const source = question;
+    export let problem;
+	export let slug;
+	const source = problem;
 
 	let pond;
 	let filename;
 	// the name to use for the internal file input
-	let uploadApiLink = `${baseLink}/api/v1/files/upload`
+	
 	let name = 'upload_file'; // 这个值就对应了form-data的key
 	// handle filepond events
+
+	import { user } from '../../stores/userStore';
+	let sid;
+	user.subscribe((value) => {
+		sid = value.sid;
+	});
+
+	let uploadApiLink = `${baseLink}/api/v1/files/upload/${sid}/alg/${slug}`;
+
 	function handleInit() {
 		console.log('FilePond has initialised');
 	}
@@ -88,15 +102,34 @@
 		});
 	}
 
+	function seeResult(){
+		console.log('filename', filename)
+		// judgeApi(filename).then((response) => {
+		// 	if (response.status == 200) {
+		// 		console.log(response.data)
+		// 		toast.push("评测输出是: "+response.data.output);
+		// 	} else {
+		// 		toast.push("评测失败", {
+		// 			theme: {
+		// 				'--toastBackground': '#F56565',
+		// 				'--toastBarBackground': '#C53030'
+		// 			}
+		// 		});
+		// 	}
+		// });
+	}
 
 </script>
 
-<h1>题目</h1>
+<h1>题目: {slug}</h1>
 
-<SvelteMarkdown {source} />
+<article>
+	<SvelteMarkdown {source} />
+</article>
 
-<div class="grid grid-rows-2 grid-cols-5 gap-4 mt-10">
-	<div class="row-span-2 col-span-4">
+
+<div class="grid grid-rows-2 grid-cols-3 gap-4 mt-10">
+	<div class="row-span-2 col-span-2">
 		<FilePond
 			bind:this={pond}
 			labelIdle='Drag & Drop your data (py file, 测试上传Python代码) or <span class="filepond--label-action"> Browse </span>'
@@ -108,7 +141,10 @@
 			instantUpload={false}
 		/>
 	</div>
-	<div class=" m-auto">
+	<div class="row-span-1 m-auto">
 		<Button on:click={commitJudge} kind="tertiary">提交评测</Button>
+	</div>
+	<div class="row-span-1 m-auto">
+		<Button on:click={seeResult} kind="tertiary">查看结果</Button>
 	</div>
 </div>
