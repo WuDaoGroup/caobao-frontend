@@ -9,6 +9,7 @@
 <script context="module">
 	import { baseLink } from '../../services/api.js';
 	import {querySingleProblemApi} from '../../api/problemApi';
+	import {timeConverter} from '../../services/time.js';
 	export const prerender = true;
 
 	export async function load({ fetch, params }) {
@@ -132,12 +133,12 @@
 					<div class=" stats flex flex-col">
 						<div class="stat">
 						  <div class="stat-title">开始时间:</div>
-						  <div class="text-emerald-700 font-bold text-lg">{problem.begin}</div>
+						  <div class="text-emerald-700 font-bold text-sm">{timeConverter(problem.begin)}</div>
 						</div>
 						
 						<div class="stat">
 						  <div class="stat-title">截止时间:</div>
-						  <div class="text-emerald-700 font-bold text-lg">{problem.end}</div>
+						  <div class="text-emerald-700 font-bold text-sm">{timeConverter(problem.end)}</div>
 						</div>
 						
 						<div class="stat">
