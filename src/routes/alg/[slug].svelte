@@ -47,6 +47,7 @@
 	export let slug;
 	const source = problem;
 
+	let result = "尚未评测";
 	let pond;
 	let filename;
 	// the name to use for the internal file input
@@ -76,7 +77,6 @@
 					'--toastBarBackground': '#C53030'
 				}
 			});
-			
 			fileItem.abortLoad();
 			fileItem.abortProcessing();
 		} else {
@@ -89,8 +89,9 @@
 		console.log('filename', filename)
 		judgeApi(filename).then((response) => {
 			if (response.status == 200) {
-				console.log(response.data)
-				toast.push("评测输出是: "+response.data.output);
+				// console.log(response.data)
+				// toast.push("评测输出是: "+response.data.output);
+				toast.push("正在评测");
 			} else {
 				toast.push("评测失败", {
 					theme: {
@@ -102,49 +103,46 @@
 		});
 	}
 
-	function seeResult(){
-		console.log('filename', filename)
-		// judgeApi(filename).then((response) => {
-		// 	if (response.status == 200) {
-		// 		console.log(response.data)
-		// 		toast.push("评测输出是: "+response.data.output);
-		// 	} else {
-		// 		toast.push("评测失败", {
-		// 			theme: {
-		// 				'--toastBackground': '#F56565',
-		// 				'--toastBarBackground': '#C53030'
-		// 			}
-		// 		});
-		// 	}
-		// });
-	}
-
 </script>
 
-<h1>题目: {slug}</h1>
+<problem class="flex items-center justify-center text-gray-800 p-2">
 
-<article>
-	<SvelteMarkdown {source} />
-</article>
+	<!-- Component Start -->
+	<div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8 w-full max-w-screen-lg">
+		<div class="lg:col-span-2">
+			<h2 class="text-sm font-medium">题目: {slug}</h2>
+			<div class="bg-white rounded mt-4 shadow-lg p-4">
+				<SvelteMarkdown {source} />
+			</div>
+		</div>
+		<div>
+			<h2 class="text-sm font-medium">评测区</h2>
+			<div class="bg-white rounded mt-4 shadow-lg py-6">
+				<div class="px-8">
+					<FilePond
+						bind:this={pond}
+						labelIdle='拖拽上传Python代码 or <span class="filepond--label-action"> 浏览... </span>'
+						{name}
+						server={uploadApiLink}
+						allowMultiple={true}
+						oninit={handleInit}
+						onaddfile={handleAddFile}
+						instantUpload={false}
+					/>
+				</div>
+				<div class="px-8 mt-4">
 
+					<div class="px-8 mt-4 border-t pt-4">
+						<div class="flex items-end justify-between">
+							<span class="font-semibold">当前状态:</span>
+							<span class="font-semibold text-sky-400">{result}</span>
+						</div>
+					</div>
+					<div class="flex flex-col px-8 pt-4">
+						<button class="flex items-center justify-center bg-blue-600 text-sm font-medium w-full h-10 rounded text-blue-50 hover:bg-blue-700" on:click={commitJudge}>提交评测</button>
+					</div>
+			</div>
+		</div>
+	</div>
 
-<div class="grid grid-rows-2 grid-cols-3 gap-4 mt-10">
-	<div class="row-span-2 col-span-2">
-		<FilePond
-			bind:this={pond}
-			labelIdle='Drag & Drop your data (py file, 测试上传Python代码) or <span class="filepond--label-action"> Browse </span>'
-			{name}
-			server={uploadApiLink}
-			allowMultiple={true}
-			oninit={handleInit}
-			onaddfile={handleAddFile}
-			instantUpload={false}
-		/>
-	</div>
-	<div class="row-span-1 m-auto">
-		<Button on:click={commitJudge} kind="tertiary">提交评测</Button>
-	</div>
-	<div class="row-span-1 m-auto">
-		<Button on:click={seeResult} kind="tertiary">查看结果</Button>
-	</div>
-</div>
+</problem>
