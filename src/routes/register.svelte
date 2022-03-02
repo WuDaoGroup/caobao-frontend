@@ -1,5 +1,5 @@
 <script>
-	import { TextInput, PasswordInput } from 'carbon-components-svelte';
+	import { RadioButtonGroup, RadioButton, TextInput, PasswordInput } from 'carbon-components-svelte';
 	import { toast } from '@zerodevx/svelte-toast';
 	import { base } from '$app/paths';
 	import { registerApi } from '../api/userApi';
@@ -10,6 +10,9 @@
 	let password1 = '';
 	let password2 = '';
 	let info;
+	const courses = ['alg', 'oop'];
+	let course = courses[0]
+	$: console.log(course)
 
 	function handleRegister() {
 		if (password1 !== password2) {
@@ -21,7 +24,7 @@
 				});
 			return;
 		}
-		registerApi(sid, name, password1, info).then((response) => {
+		registerApi(sid, name, password1, course, info).then((response) => {
 			if (response.status == 200) {
 				toast.push('成功注册');
 				goto(`/login`);
@@ -56,6 +59,18 @@
 			required
 			bind:value={name}
 		/>
+		<div class="mt-4">
+			<RadioButtonGroup
+				legendText={"课程"}
+				labelPosition="right"
+				bind:selected={course}
+			>
+				{#each courses as p}
+					<RadioButton labelText={p} value={p} />
+				{/each}
+			</RadioButtonGroup>
+		</div>
+
 		<div class="mt-4">
 			<PasswordInput
 				required
