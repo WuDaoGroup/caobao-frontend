@@ -73,7 +73,7 @@
 		sid = value.sid;
 	});
 
-	let uploadApiLink = `${baseLink}/api/v1/files/upload/${sid}/alg/${slug}`;
+	let uploadApiLink = `${baseLink}/api/v1/files/upload/${sid}/alg/${problem.address}`;
 
 	function handleInit() {
 		console.log('FilePond has initialised');
@@ -99,11 +99,10 @@
 
 	function commitJudge(){
 		console.log('filename', filename)
-		judgeApi(filename).then((response) => {
+		judgeApi(sid, 'alg', problem.address, 'python', problem.testcase_num).then((response) => {
 			if (response.status == 200) {
-				// console.log(response.data)
-				// toast.push("评测输出是: "+response.data.output);
-				toast.push("正在评测");
+				console.log(response.data)
+				toast.push("评测结果是:"+response.data);
 			} else {
 				toast.push("评测失败", {
 					theme: {
