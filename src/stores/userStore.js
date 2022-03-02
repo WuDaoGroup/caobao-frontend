@@ -4,7 +4,8 @@ import { browser } from '$app/env';
 let defaultUser = {
 	sid : 10001,
 	name: '未登录',
-	password: '',
+	password: 'xxxx',
+	course: 'alg',
 	info: '好开心'
 };
 export const user = writable(defaultUser);
