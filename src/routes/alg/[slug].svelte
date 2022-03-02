@@ -101,8 +101,21 @@
 		console.log('filename', filename)
 		judgeApi(sid, 'alg', problem.address, 'python', problem.testcase_num).then((response) => {
 			if (response.status == 200) {
-				console.log(response.data)
-				toast.push("评测结果是:"+response.data);
+				console.log(response.data.compile_result)
+				toast.push(response.data.compile_result)
+				if (response.data.compile_result != "Compile Success"){
+					return;
+				}
+				let acNum = 0;
+				for (let i = 0; i < response.data.testcases_detail.length; i++) {
+					console.log(response.data.testcases_detail[i]['result'])
+					if (response.data.testcases_detail[i]['result'] == 'Accepted') {
+						acNum++;
+					}
+					toast.push(`测试点${i+1}: ${response.data.testcases_detail[i]['result']}`)
+				}
+				result = `${acNum} / ${problem.testcase_num}`
+				
 			} else {
 				toast.push("评测失败", {
 					theme: {
