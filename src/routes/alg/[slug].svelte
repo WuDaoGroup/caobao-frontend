@@ -8,20 +8,27 @@
 
 <script context="module">
 	import { baseLink } from '../../services/api.js';
+	import {querySingleProblemApi} from '../../api/problemApi';
 	export const prerender = true;
+
 	export async function load({ fetch, params }) {
+		let problemContentHtml;
 		let problem;
 		try {
+
+			problem = await fetch(`${baseLink}/api/v1/problems/single/${params.slug}`).then((res) => res.json());;
+			console.log('problem:',problem)
 			// here we are gonna fetch the single article by id
-			problem = await fetch(`${baseLink}/static/alg/${params.slug}/question.md`);
-            problem = await problem.text()
+			problemContentHtml = await fetch(`${baseLink}/static/alg/${problem.address}/question.md`);
+            problemContentHtml = await problemContentHtml.text()
 			
 		} catch (e) {
 			console.log(e);
 		}
 		return {
 			props: {
-                problem,
+				problem,
+                problemContentHtml,
 				slug: params.slug
 			}
 		};
@@ -29,8 +36,9 @@
 </script>
 
 <script>
-	import {judgeApi} from '../../api/judgeApi'
+	import { judgeApi } from '../../api/judgeApi'
 	import { toast } from '@zerodevx/svelte-toast';
+	
 	import {
 		Button,
 		DataTable,
@@ -43,9 +51,12 @@
 	} from 'carbon-components-svelte';
 	import SvelteMarkdown from 'svelte-markdown'
 	import FilePond from 'svelte-filepond';
-    export let problem;
+	export let problem;
+	console.log('problem_detail:', problem)
+
+	export let problemContentHtml;
 	export let slug;
-	const source = problem;
+	const source = problemContentHtml;
 
 	let result = "尚未评测";
 	let pond;
@@ -110,12 +121,36 @@
 	<!-- Component Start -->
 	<div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8 w-full max-w-screen-lg">
 		<div class="lg:col-span-2">
-			<h2 class="text-sm font-medium">题目: {slug}</h2>
+			<h2 class="text-sm font-medium">题目: {problem.title}</h2>
 			<div class="bg-white rounded mt-4 shadow-lg p-4">
 				<SvelteMarkdown {source} />
 			</div>
 		</div>
 		<div>
+			<h2 class="text-sm font-medium">题目信息</h2>
+			<div class="bg-white rounded mt-4 shadow-lg py-4">
+					<div class=" stats flex flex-col">
+						<div class="stat">
+						  <div class="stat-title">开始时间:</div>
+						  <div class="text-emerald-700 font-bold text-lg">{problem.begin}</div>
+						</div>
+						
+						<div class="stat">
+						  <div class="stat-title">截止时间:</div>
+						  <div class="text-emerald-700 font-bold text-lg">{problem.end}</div>
+						</div>
+						
+						<div class="stat">
+						  <div class="stat-title">测试样例个数:</div>
+						  <div class="text-emerald-700 font-bold text-lg">{problem.testcase_num}</div>
+						</div>
+						<div class="stat">
+							<div class="stat-title">题目描述:</div>
+							<div class="text-emerald-700 font-bold text-lg">{problem.description}</div>
+						</div>
+				</div>
+		</div>
+		<div class="mt-4">
 			<h2 class="text-sm font-medium">评测区</h2>
 			<div class="bg-white rounded mt-4 shadow-lg py-6">
 				<div class="px-8">
@@ -135,7 +170,7 @@
 					<div class="px-8 mt-4 border-t pt-4">
 						<div class="flex items-end justify-between">
 							<span class="font-semibold">当前状态:</span>
-							<span class="font-semibold text-sky-400">{result}</span>
+							<span class="font-semibold text-emerald-700">{result}</span>
 						</div>
 					</div>
 					<div class="flex flex-col px-8 pt-4">

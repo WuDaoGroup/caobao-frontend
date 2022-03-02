@@ -22,6 +22,6 @@
         <h2>{problem.title}</h2>
         <p>{problem.description}</p>
     </div>
-    <button class="btn btn-outline btn-sm mt-2" on:click={()=>goto('alg/'+problem.address)}>查看</button>
+    <button class="btn btn-outline btn-sm mt-2" on:click={()=>goto('alg/'+problem.id)}>查看</button>
     <div class="divider"></div> 
 {/each}
