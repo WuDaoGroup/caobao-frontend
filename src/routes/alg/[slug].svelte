@@ -8,7 +8,7 @@
 
 <script context="module">
 	import { baseLink } from '../../services/api.js';
-	import {querySingleProblemApi} from '../../api/problemApi';
+	// import {querySingleProblemApi} from '../../api/problemApi';
 	import {timeConverter} from '../../services/time.js';
 	export const prerender = true;
 
@@ -48,17 +48,19 @@
 		RadioButton,
 		InlineNotification,
 		ProgressIndicator,
-		ProgressStep
+		ProgressStep,
+		Select, SelectItem
 	} from 'carbon-components-svelte';
 	import SvelteMarkdown from 'svelte-markdown'
 	import FilePond from 'svelte-filepond';
 	export let problem;
-	console.log('problem_detail:', problem)
+	// console.log('problem_detail:', problem)
 
 	export let problemContentHtml;
 	export let slug;
 	const source = problemContentHtml;
-
+	let languages = JSON.parse(problem.language)
+	console.log('language:', languages)
 	let result = "尚未评测";
 	let pond;
 	let filename;
@@ -135,7 +137,7 @@
 	<div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8 w-full max-w-screen-lg">
 		<div class="lg:col-span-2">
 			<h2 class="text-sm font-medium">题目: {problem.title}</h2>
-			<div class="bg-white rounded mt-4 shadow-lg p-4">
+			<div class="bg-white rounded mt-4 shadow-lg p-4 min-h-fit">
 				<SvelteMarkdown {source} />
 			</div>
 		</div>
@@ -180,14 +182,19 @@
 				</div>
 				<div class="px-8 mt-4">
 
-					<div class="px-8 mt-4 border-t pt-4">
+					<div class="px-4 mt-4 border-t pt-4">
 						<div class="flex items-end justify-between">
 							<span class="font-semibold">当前状态:</span>
 							<span class="font-semibold text-emerald-700">{result}</span>
 						</div>
 					</div>
-					<div class="flex flex-col px-8 pt-4">
-						<button class="flex items-center justify-center bg-blue-600 text-sm font-medium w-full h-10 rounded text-blue-50 hover:bg-blue-700" on:click={commitJudge}>提交评测</button>
+					<div class="flex items-end justify-between px-4 pt-4 items-center">
+						<select class="select select-bordered w-30">
+							<option disabled selected>语言</option>
+							<option>Han Solo</option>
+							<option>Greedo</option>
+						</select>
+						<button class="bg-blue-600 text-sm font-medium w-20 h-12 rounded text-blue-50 hover:bg-blue-700" on:click={commitJudge}>提交评测</button>
 					</div>
 			</div>
 		</div>

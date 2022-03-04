@@ -21,6 +21,7 @@
     <div>
         <h2>{problem.title}</h2>
         <p>{problem.description}</p>
+        <p>支持语言: {JSON.parse(problem.language)}</p>
     </div>
     <button class="btn btn-outline btn-sm mt-2" on:click={()=>goto('alg/'+problem.id)}>查看</button>
     <div class="divider"></div> 
