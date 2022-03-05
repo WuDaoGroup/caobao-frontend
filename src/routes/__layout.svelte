@@ -50,8 +50,8 @@
 			<HeaderPanelLinks>
 				<HeaderPanelDivider>Hi, {name}</HeaderPanelDivider>
 				<HeaderPanelLink href="{base}/login">登录 | Sign In</HeaderPanelLink>
-				<!-- <HeaderPanelLink href="{base}/login">登出 | Sign Out</HeaderPanelLink> -->
 				<HeaderPanelLink href="{base}/register">注册 | Sign Up</HeaderPanelLink>
+				<HeaderPanelLink href="{base}/record">提交记录</HeaderPanelLink>
 			</HeaderPanelLinks>
 		</HeaderAction>
 	</HeaderUtilities>

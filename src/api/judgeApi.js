@@ -17,3 +17,14 @@ export const judgeApi = async (sid, course, problem, pid, language, testcase_num
 		console.error(err);
 	}
 };
+
+export const queryJudgeRecordsApi = async (sid) => {
+	try {
+		let form = new FormData();
+		form.append('sid', sid); // 学号
+		const response = await api.post(`/api/v1/judge/records`, form);
+		return response;
+	} catch (err) {
+		console.error(err);
+	}
+};
