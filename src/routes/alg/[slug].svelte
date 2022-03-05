@@ -57,7 +57,9 @@
 	// console.log('problem_detail:', problem)
 
 	export let problemContentHtml;
-	export let slug;
+	let curTime = Date.parse( new Date())/1000;
+
+	// export let slug;
 	const source = problemContentHtml;
 	let languages = JSON.parse(problem.language)
 	// console.log('language:', languages)
@@ -85,6 +87,7 @@
 	function handleAddFile(err, fileItem) {
 		console.log('A file has been added', fileItem);
 		console.log('extension:', fileItem.fileExtension.toLowerCase())
+		let curTime = Date.parse( new Date())/1000;
 		if (!languages.includes(fileItem.fileExtension.toLowerCase())) {
 			toast.push('文件类型错误', {
 				theme: {
@@ -94,6 +97,13 @@
 			});
 			fileItem.abortLoad();
 			fileItem.abortProcessing();
+		} else if (curTime > problem.end){
+			toast.push('实验已结束', {
+				theme: {
+					'--toastBackground': '#F56565',
+					'--toastBarBackground': '#C53030'
+				}
+			});
 		} else {
 			toast.push('点击上传');
 			filename = fileItem.filename
@@ -137,7 +147,7 @@
 	<!-- Component Start -->
 	<div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8 w-full max-w-screen-lg">
 		<div class="lg:col-span-2">
-			<h2 class="text-sm font-medium">题目: {problem.title}</h2>
+			<h2 class="text-sm font-medium">{problem.title} (题目ID: {problem.id})</h2>
 			<div class="bg-white rounded mt-4 shadow-lg p-4 min-h-fit">
 				<SvelteMarkdown {source} />
 			</div>
@@ -166,41 +176,50 @@
 						</div>
 				</div>
 		</div>
-		<div class="mt-4">
-			<h2 class="text-sm font-medium">评测区</h2>
-			<div class="bg-white rounded mt-4 shadow-lg py-6">
-				<div class="px-8">
-					<FilePond
-						bind:this={pond}
-						labelIdle='拖拽上传代码 or <span class="filepond--label-action"> 浏览... </span>'
-						{name}
-						server={uploadApiLink}
-						allowMultiple={true}
-						oninit={handleInit}
-						onaddfile={handleAddFile}
-						instantUpload={false}
-					/>
-				</div>
-				<div class="px-8 mt-4">
+		{#if problem.end > curTime}
+			<div class="mt-4">
+				<h2 class="text-sm font-medium">评测区</h2>
+				<div class="bg-white rounded mt-4 shadow-lg py-6">
+					<div class="px-8">
+						<FilePond
+							bind:this={pond}
+							labelIdle='拖拽上传代码 or <span class="filepond--label-action"> 浏览... </span>'
+							{name}
+							server={uploadApiLink}
+							allowMultiple={true}
+							oninit={handleInit}
+							onaddfile={handleAddFile}
+							instantUpload={false}
+						/>
+					</div>
+					<div class="px-8 mt-4">
 
-					<div class="px-4 mt-4 border-t pt-4">
-						<div class="flex items-end justify-between">
-							<span class="font-semibold">当前状态:</span>
-							<span class="font-semibold text-emerald-700">{result}</span>
+						<div class="px-4 mt-4 border-t pt-4">
+							<div class="flex items-end justify-between">
+								<span class="font-semibold">当前状态:</span>
+								<span class="font-semibold text-emerald-700">{result}</span>
+							</div>
+						</div>
+						<div class="flex items-end justify-between px-4 pt-4 items-center">
+							<select class="select select-bordered w-30" bind:value={selectedLanguage}>
+								{#each languages as lang}
+								<option value={lang} class="font-mono">
+									{lang}
+									</option>
+								{/each}
+							</select>
+							<button class="bg-blue-600 text-sm font-medium w-20 h-12 rounded text-blue-50 hover:bg-blue-700" on:click={commitJudge}>提交评测</button>
 						</div>
 					</div>
-					<div class="flex items-end justify-between px-4 pt-4 items-center">
-						<select class="select select-bordered w-30" bind:value={selectedLanguage}>
-							{#each languages as lang}
-							<option value={lang} class="font-mono">
-								{lang}
-								</option>
-							{/each}
-						</select>
-						<button class="bg-blue-600 text-sm font-medium w-20 h-12 rounded text-blue-50 hover:bg-blue-700" on:click={commitJudge}>提交评测</button>
-					</div>
+				</div>
 			</div>
-		</div>
-	</div>
+		{:else}
+			<div class="alert alert-error shadow-lg mt-4">
+				<div>
+				<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+				<span class="flex items-center ml-1">实验已结束</span>
+				</div>
+		  </div>
+		{/if}
 
 </problem>
