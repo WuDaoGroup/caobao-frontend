@@ -60,7 +60,8 @@
 	export let slug;
 	const source = problemContentHtml;
 	let languages = JSON.parse(problem.language)
-	console.log('language:', languages)
+	// console.log('language:', languages)
+	let selectedLanguage;
 	let result = "尚未评测";
 	let pond;
 	let filename;
@@ -83,8 +84,8 @@
 	
 	function handleAddFile(err, fileItem) {
 		console.log('A file has been added', fileItem);
-		if (!['py'].includes(fileItem.fileExtension.toLowerCase())) {
-			(checkUploadFiles.invalid = true);
+		console.log('extension:', fileItem.fileExtension.toLowerCase())
+		if (!languages.includes(fileItem.fileExtension.toLowerCase())) {
 			toast.push('文件类型错误', {
 				theme: {
 					'--toastBackground': '#F56565',
@@ -101,7 +102,7 @@
 
 	function commitJudge(){
 		console.log('filename', filename)
-		judgeApi(sid, 'alg', problem.address, 'python', problem.testcase_num).then((response) => {
+		judgeApi(sid, 'alg', problem.address, selectedLanguage, problem.testcase_num).then((response) => {
 			if (response.status == 200) {
 				console.log(response.data.compile_result)
 				toast.push(response.data.compile_result)
@@ -189,10 +190,12 @@
 						</div>
 					</div>
 					<div class="flex items-end justify-between px-4 pt-4 items-center">
-						<select class="select select-bordered w-30">
-							<option disabled selected>语言</option>
-							<option>Han Solo</option>
-							<option>Greedo</option>
+						<select class="select select-bordered w-30" bind:value={selectedLanguage}>
+							{#each languages as lang}
+							<option value={lang} class="font-mono">
+								{lang}
+								</option>
+							{/each}
 						</select>
 						<button class="bg-blue-600 text-sm font-medium w-20 h-12 rounded text-blue-50 hover:bg-blue-700" on:click={commitJudge}>提交评测</button>
 					</div>
