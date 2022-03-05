@@ -102,7 +102,7 @@
 
 	function commitJudge(){
 		console.log('filename', filename)
-		judgeApi(sid, 'alg', problem.address, selectedLanguage, problem.testcase_num).then((response) => {
+		judgeApi(sid, 'alg', problem.address, problem.id, selectedLanguage, problem.testcase_num).then((response) => {
 			if (response.status == 200) {
 				console.log(response.data.compile_result)
 				toast.push(response.data.compile_result)
