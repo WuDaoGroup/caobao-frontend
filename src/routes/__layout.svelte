@@ -52,6 +52,7 @@
 				<HeaderPanelLink href="{base}/login">登录 | Sign In</HeaderPanelLink>
 				<HeaderPanelLink href="{base}/register">注册 | Sign Up</HeaderPanelLink>
 				<HeaderPanelLink href="{base}/record">提交记录</HeaderPanelLink>
+				<HeaderPanelLink href="{base}/profile">Profile</HeaderPanelLink>
 			</HeaderPanelLinks>
 		</HeaderAction>
 	</HeaderUtilities>
