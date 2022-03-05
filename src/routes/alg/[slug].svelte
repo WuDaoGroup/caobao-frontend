@@ -172,7 +172,7 @@
 				<div class="px-8">
 					<FilePond
 						bind:this={pond}
-						labelIdle='拖拽上传Python代码 or <span class="filepond--label-action"> 浏览... </span>'
+						labelIdle='拖拽上传代码 or <span class="filepond--label-action"> 浏览... </span>'
 						{name}
 						server={uploadApiLink}
 						allowMultiple={true}
