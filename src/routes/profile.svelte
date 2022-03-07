@@ -1,3 +1,28 @@
+<script>
+    function downloadFile(){
+        const url = "http://localhost:8059/static/test.ipynb";
+        const options = {
+        method: "GET",
+        headers: {
+            Accept: "application/octet-stream",
+            "Content-Type": "application/octet-stream;charset=UTF-8",
+        },
+        };
+        fetch(url, options)
+        .then((response) => response.blob())
+        .then((data) => {
+            // console.log(data);
+            const url = window.URL.createObjectURL(new Blob([data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'code.ipynb'); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+        });
+    }
+</script>
+
+
 <form action="#" class="flex flex-wrap">
     <div class="mx-16">
         <h3 class="text-2xl font-semibold">Basic Information</h3>
@@ -8,8 +33,7 @@
                 <input
                     type="text"
                     value="antonia"
-                    class="w-full appearance-none text-black text-opacity-50 rounded shadow py-1 px-2 mr-2 focus:outline-none focus:shadow-outline focus:border-blue-200 text-opacity-25 mt-2"
-                    
+                    class="w-full appearance-none text-black text-opacity-50 rounded shadow py-1 px-2 mr-2 focus:outline-none focus:shadow-outline focus:border-blue-200 text-opacity-25 mt-2"  
                 />
             </div>
 
@@ -60,3 +84,5 @@
         </div>
     </div>
 </form>
+
+<button on:click={downloadFile}>下载</button>
