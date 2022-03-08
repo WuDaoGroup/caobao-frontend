@@ -61,6 +61,7 @@
 <SideNav bind:isOpen={isSideNavOpen}>
 	<SideNavItems>
 		<SideNavLink text="算法课程" href="{base}/alg" />
+		<SideNavLink text="面向对象课程" href="{base}/oop" />
 	</SideNavItems>
 </SideNav>
 

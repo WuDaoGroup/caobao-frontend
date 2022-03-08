@@ -31,6 +31,10 @@
 <div class="flex flex-col w-full">
 	<h1>Problems</h1>
 	<div class="divider" />
+	{#if problemList.length == 0}
+		<p>No problems found</p>
+	{/if}
+
 	<div class="container mx-auto bg-gray-50 rounded p-2 antialiased">
 		{#each problemList as problem}
 			<div class="bg-gray-100 mx-auto border-gray-500 border rounded my-2 text-gray-700">
