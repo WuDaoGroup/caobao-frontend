@@ -130,7 +130,7 @@
 			if (response.status == 200) {
 				// console.log(response.data.compile_result)
 				toast.push(response.data.compile_result)
-				if (response.data.compile_result != "Compile Successfully"){
+				if (response.data.compile_result != "Compile Successfully" && response.data.compile_result != "/") {
 					return;
 				}
 				let acNum = 0;
