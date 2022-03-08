@@ -88,7 +88,15 @@
 		console.log('A file has been added', fileItem);
 		console.log('extension:', fileItem.fileExtension.toLowerCase())
 		let curTime = Date.parse( new Date())/1000;
-		if (!languages.includes(fileItem.fileExtension.toLowerCase())) {
+		let languageExt = []
+		for (let i = 0; i < languages.length; i++) {
+			if (languages[i] == 'java_files'){
+				languageExt.push('zip')
+			} else{
+				languageExt.push(languages[i].ext)
+			}
+		}
+		if (!languageExt.includes(fileItem.fileExtension.toLowerCase())) {
 			toast.push('文件类型错误', {
 				theme: {
 					'--toastBackground': '#F56565',
@@ -116,7 +124,7 @@
 			if (response.status == 200) {
 				console.log(response.data.compile_result)
 				toast.push(response.data.compile_result)
-				if (response.data.compile_result != "Compile Success"){
+				if (response.data.compile_result != "Compile Successfully"){
 					return;
 				}
 				let acNum = 0;
