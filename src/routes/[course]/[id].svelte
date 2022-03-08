@@ -96,9 +96,10 @@
 			if (languages[i] == 'java_files'){
 				languageExt.push('zip')
 			} else{
-				languageExt.push(languages[i].ext)
+				languageExt.push(languages[i])
 			}
 		}
+		// console.log('languageSupport:', languageExt)
 		if (!languageExt.includes(fileItem.fileExtension.toLowerCase())) {
 			toast.push('文件类型错误', {
 				theme: {
