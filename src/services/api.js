@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-// export const baseLink = 'http://localhost:8059
-export const baseLink = 'https://caobao-backend.herokuapp.com'
+export const baseLink = 'http://106.54.165.117:8059'
+// export const baseLink = 'http://localhost:8059'
+// export const baseLink = 'https://caobao-backend.herokuapp.com'
 
 // Create a instance of axios to use the same base url.
 const axiosAPI = axios.create({
