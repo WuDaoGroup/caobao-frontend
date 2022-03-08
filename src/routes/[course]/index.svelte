@@ -1,3 +1,9 @@
+<svelte:head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>课程题目列表</title>
+</svelte:head>
+
 <script context="module">
 	import { queryProblemsApi } from '../../api/problemApi';
 

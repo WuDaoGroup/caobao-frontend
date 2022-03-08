@@ -23,6 +23,12 @@
 	});
 </script>
 
+<svelte:head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>提交记录</title>
+</svelte:head>
+
 <div class="flex flex-col items-center justify-center">
 	<h1>History</h1>
 	<div class="w-3/4 mt-8">

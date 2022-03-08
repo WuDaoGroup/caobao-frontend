@@ -3,7 +3,9 @@
 </style>
 
 <svelte:head>
+	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>题目详情</title>
 </svelte:head>
 
 <script context="module">
