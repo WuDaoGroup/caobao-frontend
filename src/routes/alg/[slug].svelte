@@ -18,7 +18,7 @@
 		try {
 
 			problem = await fetch(`${baseLink}/api/v1/problems/single/${params.slug}`).then((res) => res.json());;
-			console.log('problem:',problem)
+			// console.log('problem:',problem)
 			// here we are gonna fetch the single article by id
 			problemContentHtml = await fetch(`${baseLink}/static/alg/${problem.address}/question.md`);
             problemContentHtml = await problemContentHtml.text()
@@ -86,7 +86,7 @@
 	
 	function handleAddFile(err, fileItem) {
 		console.log('A file has been added', fileItem);
-		console.log('extension:', fileItem.fileExtension.toLowerCase())
+		// console.log('extension:', fileItem.fileExtension.toLowerCase())
 		let curTime = Date.parse( new Date())/1000;
 		let languageExt = []
 		for (let i = 0; i < languages.length; i++) {
@@ -119,17 +119,17 @@
 	}
 
 	function commitJudge(){
-		console.log('filename', filename)
+		// console.log('filename', filename)
 		judgeApi(sid, 'alg', problem.address, problem.id, selectedLanguage, problem.testcase_num).then((response) => {
 			if (response.status == 200) {
-				console.log(response.data.compile_result)
+				// console.log(response.data.compile_result)
 				toast.push(response.data.compile_result)
 				if (response.data.compile_result != "Compile Successfully"){
 					return;
 				}
 				let acNum = 0;
 				for (let i = 0; i < response.data.testcases_detail.length; i++) {
-					console.log(response.data.testcases_detail[i]['result'])
+					// console.log(response.data.testcases_detail[i]['result'])
 					if (response.data.testcases_detail[i]['result'] == 'Accepted') {
 						acNum++;
 					}

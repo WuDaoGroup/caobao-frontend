@@ -12,7 +12,6 @@
 	let info;
 	const courses = ['alg', 'oop'];
 	let course = courses[0]
-	$: console.log(course)
 
 	function handleRegister() {
 		if (password1 !== password2) {

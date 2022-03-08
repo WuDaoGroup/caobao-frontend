@@ -18,7 +18,7 @@
 	onMount(async () => {
 		queryJudgeRecordsApi(sid).then((res) => {
 			records = res.data;
-			console.log(records);
+			// console.log(records);
 		});
 	});
 </script>

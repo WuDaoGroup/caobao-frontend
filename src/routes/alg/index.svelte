@@ -9,7 +9,7 @@
 	onMount(async () => {
 		queryProblemsApi('alg').then((res) => {
 			problemList = res.data;
-			console.log(problemList);
+			// console.log(problemList);
 		});
 	});
 </script>
