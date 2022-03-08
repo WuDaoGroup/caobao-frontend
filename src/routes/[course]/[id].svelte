@@ -12,15 +12,18 @@
 	import {timeConverter} from '../../services/time.js';
 	export const prerender = true;
 
-	export async function load({ fetch, params }) {
+	export async function load({ params }) {
+		const course = params.course;
+		const id = params.id;
+		console.log('params:', params)
 		let problemContentHtml;
 		let problem;
 		try {
 
-			problem = await fetch(`${baseLink}/api/v1/problems/single/${params.slug}`).then((res) => res.json());;
+			problem = await fetch(`${baseLink}/api/v1/problems/single/${id}`).then((res) => res.json());;
 			// console.log('problem:',problem)
 			// here we are gonna fetch the single article by id
-			problemContentHtml = await fetch(`${baseLink}/static/alg/${problem.address}/question.md`);
+			problemContentHtml = await fetch(`${baseLink}/static/${course}/${problem.address}/question.md`);
             problemContentHtml = await problemContentHtml.text()
 			
 		} catch (e) {
@@ -30,7 +33,7 @@
 			props: {
 				problem,
                 problemContentHtml,
-				slug: params.slug
+				course,
 			}
 		};
 	}
@@ -57,9 +60,9 @@
 	// console.log('problem_detail:', problem)
 
 	export let problemContentHtml;
+	export let course;
 	let curTime = Date.parse( new Date())/1000;
 
-	// export let slug;
 	const source = problemContentHtml;
 	let languages = JSON.parse(problem.language)
 	// console.log('language:', languages)
@@ -78,7 +81,7 @@
 		sid = value.sid;
 	});
 
-	let uploadApiLink = `${baseLink}/api/v1/files/upload/${sid}/alg/${problem.address}`;
+	let uploadApiLink = `${baseLink}/api/v1/files/upload/${sid}/${course}/${problem.address}`;
 
 	function handleInit() {
 		console.log('FilePond has initialised');
@@ -120,7 +123,7 @@
 
 	function commitJudge(){
 		// console.log('filename', filename)
-		judgeApi(sid, 'alg', problem.address, problem.id, selectedLanguage, problem.testcase_num).then((response) => {
+		judgeApi(sid, course, problem.address, problem.id, selectedLanguage, problem.testcase_num).then((response) => {
 			if (response.status == 200) {
 				// console.log(response.data.compile_result)
 				toast.push(response.data.compile_result)
