@@ -1,21 +1,35 @@
+<script context="module">
+	import { queryProblemsApi } from '../../api/problemApi';
+
+	export const prerender = true;
+	export async function load({ params }) {
+		const course = params.course;
+		let problemList;
+		// console.log(params)
+		problemList = await queryProblemsApi(course).then((res) => 
+			res.data
+		);
+		// console.log(problemList);
+		return {
+			props: {
+				problemList,
+			}
+		};
+	}
+</script>
+
+
 <script>
 	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
-	import { queryProblemsApi } from '../../api/problemApi';
 	import { timeConverter } from '../../services/time.js';
 
-	let problemList = [];
+	export let problemList;
+	// console.log('problemsList!:', problemList);
 
-	onMount(async () => {
-		queryProblemsApi('alg').then((res) => {
-			problemList = res.data;
-			// console.log(problemList);
-		});
-	});
 </script>
 
 <div class="flex flex-col w-full">
-	<h1>算法页</h1>
+	<h1>Problems</h1>
 	<div class="divider" />
 	<div class="container mx-auto bg-gray-50 rounded p-2 antialiased">
 		{#each problemList as problem}

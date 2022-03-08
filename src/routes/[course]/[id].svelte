@@ -15,12 +15,12 @@
 	export async function load({ params }) {
 		const course = params.course;
 		const id = params.id;
-		console.log('params:', params)
+		// console.log('params:', params)
 		let problemContentHtml;
 		let problem;
 		try {
 
-			problem = await fetch(`${baseLink}/api/v1/problems/single/${id}`).then((res) => res.json());;
+			problem = await fetch(`${baseLink}/api/v1/problems/single/${id}`).then((res) => res.json());
 			// console.log('problem:',problem)
 			// here we are gonna fetch the single article by id
 			problemContentHtml = await fetch(`${baseLink}/static/${course}/${problem.address}/question.md`);
