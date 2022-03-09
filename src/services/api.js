@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const baseLink = 'http://106.54.165.117:8059'
+export const baseLink = 'https://www.yhzhu.top'
+// export const baseLink = 'http://106.54.165.117:8059'
 // export const baseLink = 'http://localhost:8059'
 // export const baseLink = 'https://caobao-backend.herokuapp.com'
 
