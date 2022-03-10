@@ -128,14 +128,14 @@
 		// console.log('filename', filename)
 		judgeApi(sid, course, problem.address, problem.id, selectedLanguage, problem.testcase_num).then((response) => {
 			if (response.status == 200) {
-				// console.log(response.data.compile_result)
-				toast.push(response.data.compile_result)
+				console.log(response.data.compile_result)
+				toast.push(`Compile Status: ${response.data.compile_result}`)
 				if (response.data.compile_result != "Compile Successfully" && response.data.compile_result != "/") {
 					return;
 				}
 				let acNum = 0;
 				for (let i = 0; i < response.data.testcases_detail.length; i++) {
-					// console.log(response.data.testcases_detail[i]['result'])
+					console.log(response.data.testcases_detail[i]['result'])
 					if (response.data.testcases_detail[i]['result'] == 'Accepted') {
 						acNum++;
 					}
