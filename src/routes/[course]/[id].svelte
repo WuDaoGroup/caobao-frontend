@@ -67,7 +67,9 @@
 
 	const source = problemContentHtml;
 	let languages = JSON.parse(problem.language)
-	// console.log('language:', languages)
+	// console.log('len_languages', languages.length)
+	// let languagesCount = languages.length
+	// console.log('len_languages2', languagesCount, languagesCount == 0)
 	let selectedLanguage;
 	let result = "尚未评测";
 	let pond;
@@ -190,7 +192,7 @@
 						</div>
 				</div>
 		</div>
-		{#if problem.end > curTime}
+		{#if problem.end > curTime && languages.length > 0 }
 			<div class="mt-4">
 				<h2 class="text-sm font-medium">评测区</h2>
 				<div class="bg-white rounded mt-4 shadow-lg py-6">
@@ -227,6 +229,13 @@
 					</div>
 				</div>
 			</div>
+		{:else if problem.end > curTime && languages.length == 0}
+		<div class="alert alert-error shadow-lg mt-4">
+			<div>
+			<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+			<span class="flex items-center ml-1">本题无需评测</span>
+			</div>
+	  	</div>
 		{:else}
 			<div class="alert alert-error shadow-lg mt-4">
 				<div>
