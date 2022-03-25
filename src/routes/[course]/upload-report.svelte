@@ -1,4 +1,28 @@
+<svelte:head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>实验报告提交</title>
+</svelte:head>
+
+<script context="module">
+	import { baseLink } from '../../services/api.js';
+	// import {querySingleProblemApi} from '../../api/problemApi';
+	import {timeConverter} from '../../services/time.js';
+	export const prerender = true;
+
+	export async function load({ params }) {
+		const course = params.course;
+		return {
+			props: {
+				course,
+			}
+		};
+	}
+</script>
+
 <script>
+    export let course;
+
     import {
 		Button,
 		DataTable,
@@ -13,9 +37,47 @@
 		Tab,
 		TabContent
 	} from 'carbon-components-svelte';
-
+    import { toast } from '@zerodevx/svelte-toast';
     let labs = ['第一次作业']
     let selectedLab = labs[0]
+
+    // store中获取user
+    import { user } from '../../stores/userStore';
+    let sid = 123
+    user.subscribe((value) => {
+		sid = value.sid;
+	});
+
+    console.log('sid:', sid)
+
+    // 上传FilePond
+    import FilePond from 'svelte-filepond';
+    let pond;
+	// the name to use for the internal file input
+	let name = 'upload_file'; // 这个值就对应了form-data的key
+	// handle filepond events
+    let uploadPdfApiLink = `${baseLink}/api/v1/files/upload/${sid}/${course}/labs/${selectedLab}`;
+	function handleInit() {
+		console.log('FilePond has initialised');
+	}
+	
+	function handleAddFile(err, fileItem) {
+		console.log('A file has been added', fileItem);
+		if (!['pdf'].includes(fileItem.fileExtension.toLowerCase())) {
+			(checkUploadFiles.invalid = true);
+			toast.push('文件类型错误，需是pdf文件', {
+				theme: {
+					'--toastBackground': '#F56565',
+					'--toastBarBackground': '#C53030'
+				}
+			});
+			fileItem.abortLoad();
+			fileItem.abortProcessing();
+		} else {
+			toast.push('点击上传');
+		}
+	}
+
 </script>
 
 <h1>提交实验报告</h1>
@@ -57,9 +119,16 @@
 										  </option>
 										{/each}
 									</select>
-									<button class="btn btn-primary w-[10rem]" on:click={()=>{handleCorrelationFeature()}}>
-										生成Correlation Matrix
-									</button>
+                                    <FilePond
+                                        bind:this={pond}
+                                        labelIdle='Drag & Drop your data (csv/xls/xlsx file) or <span class="filepond--label-action"> Browse </span>'
+                                        {name}
+                                        server={uploadPdfApiLink}
+                                        allowMultiple={true}
+                                        oninit={handleInit}
+                                        onaddfile={handleAddFile}
+                                        instantUpload={false}
+                                    />
 								</div>
 							</div>
 						</div>
@@ -85,3 +154,7 @@
 		</Tabs>
 	</div>
 </div>
+
+<style>
+	@import 'filepond/dist/filepond.css';
+</style>
