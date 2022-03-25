@@ -19,6 +19,7 @@
 		return {
 			props: {
 				problemList,
+				course,
 			}
 		};
 	}
@@ -30,12 +31,24 @@
 	import { timeConverter } from '../../services/time.js';
 
 	export let problemList;
+	export let course;
 	// console.log('problemsList!:', problemList);
+	console.log(course)
 
 </script>
 
 <div class="flex flex-col w-full">
-	<h1>Problems</h1>
+
+	<div class="flex justify-between ...">
+		<h1>Problems</h1>
+		<button class="btn btn-outline btn-info" on:click={() => goto(`${course}/upload-report`)}
+			>实验报告提交入口</button
+		>
+	</div>
+	
+
+	
+
 	<div class="divider" />
 	{#if problemList.length == 0}
 		<p>No problems found</p>
@@ -73,7 +86,7 @@
 						</div>
 					</div>
 					<div class="flex items-center">
-						<button class="btn btn-outline btn-success" on:click={() => goto('alg/' + problem.id)}
+						<button class="btn btn-outline btn-success" on:click={() => goto(`${course}/${problem.id}`)}
 							>前往</button
 						>
 					</div>
