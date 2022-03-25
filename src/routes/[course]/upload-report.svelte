@@ -112,23 +112,16 @@
 									请选择是哪一次作业，新上传的作业会覆盖旧的作业。
 								</p>
 								<div class="flex items-end justify-between px-4 pt-4 items-center">
-									<select class="select select-bordered w-30 text-zinc-900 w-[10rem]" bind:value={selectedLab}>
+									<select class="select select-bordered w-30 text-zinc-900 w-[14rem]" bind:value={selectedLab}>
 										{#each labs as opt}
 										<option value={opt} class="font-mono">
 										  {opt}
 										  </option>
 										{/each}
 									</select>
-                                    <FilePond
-                                        bind:this={pond}
-                                        labelIdle='Drag & Drop your data (csv/xls/xlsx file) or <span class="filepond--label-action"> Browse </span>'
-                                        {name}
-                                        server={uploadPdfApiLink}
-                                        allowMultiple={true}
-                                        oninit={handleInit}
-                                        onaddfile={handleAddFile}
-                                        instantUpload={false}
-                                    />
+                                    <button class="btn btn-primary w-[6rem]" on:click={()=>{toast.push('确认成功')}}>
+										确定
+									</button>
 								</div>
 							</div>
 						</div>
@@ -145,8 +138,21 @@
 			<svelte:fragment slot="content">
 			<TabContent>
 				<div class="px-4 mx-auto container align-middle h-[32rem]">
+                    <div class="mt-4">
+                        <FilePond
+                            bind:this={pond}
+                            labelIdle='Drag & Drop your assignment (pdf format) or <span class="filepond--label-action"> Browse </span>'
+                            {name}
+                            server={uploadPdfApiLink}
+                            allowMultiple={true}
+                            oninit={handleInit}
+                            onaddfile={handleAddFile}
+                            instantUpload={false}
+                        />
+                    </div>
+
 					<div class="flex flex-row justify-center items-center">
-						<iframe src="//player.bilibili.com/player.html?aid=424765556&bvid=BV1k3411W7ek&cid=549700885&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" title="Overleaf & LaTex 基础入门" class="rounded-lg mt-20 w-[32rem] h-[18rem]"> </iframe>
+						<iframe src="//player.bilibili.com/player.html?aid=424765556&bvid=BV1k3411W7ek&cid=549700885&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" title="Overleaf & LaTex 基础入门" class="rounded-lg mt-4 w-[32rem] h-[18rem]"> </iframe>
 					</div>
 				</div>
 			</TabContent>
