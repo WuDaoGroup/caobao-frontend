@@ -72,6 +72,7 @@
 	// console.log('len_languages2', languagesCount, languagesCount == 0)
 	let selectedLanguage;
 	let result = "尚未评测";
+	let problemsResult = [];
 	let pond;
 	let filename;
 	// the name to use for the internal file input
@@ -136,6 +137,7 @@
 					return;
 				}
 				let acNum = 0;
+				problemsResult = response.data.testcases_detail;
 				for (let i = 0; i < response.data.testcases_detail.length; i++) {
 					console.log(response.data.testcases_detail[i]['result'])
 					if (response.data.testcases_detail[i]['result'] == 'Accepted') {
@@ -166,6 +168,32 @@
 			<h2 class="text-sm font-medium">{problem.title} (题目ID: {problem.id})</h2>
 			<div class="bg-white rounded mt-4 shadow-lg p-4 min-h-fit">
 				<SvelteMarkdown {source} />
+			</div>
+			<div class="bg-white rounded mt-4 shadow-lg p-4 min-h-fit">
+				<h2 class="text-sm font-medium">评测详情</h2>
+
+				<div class="overflow-x-auto">
+					<table class="table w-full">
+					  <!-- head -->
+					  <thead>
+						<tr>
+						  <th>ID</th>
+						  <th>Detail</th>
+						</tr>
+					  </thead>
+					  <tbody>
+						{#each problemsResult as singleProblem, i}
+							<tr>
+								<th>{i+1}</th>
+								<td>{singleProblem['result']}</td>
+							</tr>
+						{/each}
+
+
+					  </tbody>
+					</table>
+				  </div>
+				
 			</div>
 		</div>
 		<div>
