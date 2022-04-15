@@ -185,7 +185,7 @@
 						{#each problemsResult as singleProblem, i}
 							<tr>
 								<th>{i+1}</th>
-								<td>{singleProblem['result']}</td>
+								<td>{@html singleProblem['result']}</td>
 							</tr>
 						{/each}
 
