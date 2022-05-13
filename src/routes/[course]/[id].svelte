@@ -140,7 +140,7 @@
 				problemsResult = response.data.testcases_detail;
 				for (let i = 0; i < response.data.testcases_detail.length; i++) {
 					console.log(response.data.testcases_detail[i]['result'])
-					if (response.data.testcases_detail[i]['result'] == 'Accepted') {
+					if (response.data.testcases_detail[i]['result'] == '<font color="green">Accepted</font>') {
 						acNum++;
 					}
 					toast.push(`测试点${i+1}: ${response.data.testcases_detail[i]['result']}`)
