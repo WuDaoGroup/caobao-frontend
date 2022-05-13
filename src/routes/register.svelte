@@ -10,7 +10,7 @@
 	let password1 = '';
 	let password2 = '';
 	let info;
-	const courses = ['alg', 'oop'];
+	const courses = ['alg', 'oop', 'ds'];
 	let course = courses[0]
 
 	function handleRegister() {
