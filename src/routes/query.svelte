@@ -1,10 +1,30 @@
 <script>
+    import { queryScoreApi } from "../api/judgeApi";
 	let sid;
 	let password;
     let course;
     $: console.log(sid, password, course)
     let status = 'unavailable';
     $: totalScore = 0;
+    let result; 
+
+	function handleQuery() {
+		queryScoreApi(sid, password, course).then((response) => {
+			if (response.status == 200) {
+				toast.push('成功查询');
+				result = response.data.data
+			} else {
+				toast.push(response.data.msg, {
+					theme: {
+						'--toastBackground': '#F56565',
+						'--toastBarBackground': '#C53030'
+					}
+				});
+			}
+		});
+	}
+
+    console.log(result)
 </script>
 
 
@@ -26,10 +46,10 @@
     <div class="form-control">
         <div class="input-group">
           <select class="select select-bordered" bind:value={course}>
-            <option>OOP</option>
-            <option>算法</option>
+            <option>oop</option>
+            <option>alg</option>
           </select>
-          <button class="btn">查询</button>
+          <button class="btn" on:click={handleQuery}>查询</button>
         </div>
     </div>
 </div>

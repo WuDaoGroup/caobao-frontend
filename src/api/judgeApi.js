@@ -28,3 +28,15 @@ export const queryJudgeRecordsApi = async (sid) => {
 		console.error(err);
 	}
 };
+
+export const queryScoreApi = async (sid, password, course) => {
+	try {
+		let form = new FormData();
+		form.append('sid', sid); // 学号
+        form.append('password', password);
+		const response = await api.post(`/api/v1/judge/query/${course}`, form);
+		return response;
+	} catch (err) {
+		console.error(err);
+	}
+};
