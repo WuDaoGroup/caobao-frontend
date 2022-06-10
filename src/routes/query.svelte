@@ -1,5 +1,6 @@
 <script>
     import { queryScoreApi } from "../api/judgeApi";
+    import { toast } from '@zerodevx/svelte-toast';
 	let sid;
 	let password;
     let course;
@@ -10,11 +11,20 @@
 
 	function handleQuery() {
 		queryScoreApi(sid, password, course).then((response) => {
-			if (response.status == 200) {
+            console.log(sid, password)
+            if (sid==undefined){
+                toast.push('请输入学号');
+                return;
+            }
+            else if (password==undefined){
+                toast.push('请输入密码');
+                return;
+            }
+			else if (response.status == 200) {
 				toast.push('成功查询');
 				result = response.data.data
 			} else {
-				toast.push(response.data.msg, {
+				toast.push(response.data.detail, {
 					theme: {
 						'--toastBackground': '#F56565',
 						'--toastBarBackground': '#C53030'
