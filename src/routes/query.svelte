@@ -12,17 +12,17 @@
     
 
 	function handleQuery() {
+        // console.log(sid, password)
+        if (sid==undefined){
+            toast.push('请输入学号');
+            return;
+        }
+        else if (password==undefined){
+            toast.push('请输入密码');
+            return;
+        }
 		queryScoreApi(sid, password, course).then((response) => {
-            console.log(sid, password)
-            if (sid==undefined){
-                toast.push('请输入学号');
-                return;
-            }
-            else if (password==undefined){
-                toast.push('请输入密码');
-                return;
-            }
-			else if (response.status == 200) {
+			if (response.status == 200) {
 				toast.push('成功查询');
 				result = response.data.data
                 status = 'oop'
