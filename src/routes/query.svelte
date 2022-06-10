@@ -43,6 +43,11 @@
     console.log(result)
 </script>
 
+<svelte:head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>成绩查询</title>
+</svelte:head>
 
 <div class="flex flex-wrap">
     <div class="form-control mx-4">
