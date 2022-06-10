@@ -4,10 +4,12 @@
 	let sid;
 	let password;
     let course;
-    $: console.log(sid, password, course)
+    // $: console.log(sid, password, course)
     let status = 'unavailable';
     $: totalScore = 0;
-    let result; 
+    let result;
+    let headers = []
+    
 
 	function handleQuery() {
 		queryScoreApi(sid, password, course).then((response) => {
@@ -23,6 +25,10 @@
 			else if (response.status == 200) {
 				toast.push('成功查询');
 				result = response.data.data
+                status = 'oop'
+                headers = Object.keys(result)
+                // console.log(result)
+                // console.log(Object.keys(result))
 			} else {
 				toast.push(response.data.detail, {
 					theme: {
@@ -66,6 +72,8 @@
 
 <div class="divider"/>
 
+{#if status == 'oop'}
+
 <div class="stats shadow mb-4">
   
     <div class="stat">
@@ -81,7 +89,7 @@
       <!-- head -->
       <thead>
         <tr>
-          <th>考勤</th>
+          <!-- <th>考勤</th>
           <th>LAB</th>
           <th>CTS-1</th>
           <th>CTS-2</th>
@@ -89,11 +97,17 @@
           <th>CTS-4</th>
           <th>组队作业</th>
           <th>专题写作</th>
-          <th>编程大作业</th>
+          <th>编程大作业</th> -->
+          {#each headers as header}
+            <th>{header}</th>
+          {/each}
         </tr>
       </thead>
       <tbody>
         <!-- row 1 -->
+        {#each headers as header}
+            <th>{result[header]}</th>
+        {/each}
         <!-- <tr>
           <td>Cy Ganderton</td>
           <td>Quality Control Specialist</td>
@@ -103,3 +117,15 @@
       </tbody>
     </table>
 </div>
+{:else if status == 'unavailable'}
+
+<div class="stats shadow mb-4">
+  
+    <div class="stat">
+      <div class="stat-value mb-2">等待查询</div>
+      <div class="stat-desc">如有疑问请联系助教</div>
+    </div>
+    
+</div>
+
+{/if}
