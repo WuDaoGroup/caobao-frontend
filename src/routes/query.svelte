@@ -4,7 +4,7 @@
 	let sid;
 	let password;
     let course;
-    $: console.log(sid, password, course)
+    // $: console.log(sid, password, course)
     let status = 'unavailable';
     $: totalScore = 0;
     let result;
