@@ -4,7 +4,7 @@
 	let sid;
 	let password;
     let course;
-    // $: console.log(sid, password, course)
+    $: console.log(sid, password, course)
     let status = 'unavailable';
     $: totalScore = 0;
     let result;
@@ -12,11 +12,11 @@
     
 	function handleQuery() {
         // console.log(sid, password)
-        if (sid==undefined){
+        if (!sid){
             toast.push('请输入学号');
             return;
         }
-        else if (password==undefined){
+        else if (!password){
             toast.push('请输入密码');
             return;
         }
