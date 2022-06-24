@@ -24,7 +24,7 @@
 			if (response.status == 200) {
 				toast.push('成功查询');
 				result = response.data.data
-                status = 'oop'
+                status = course
                 headers = Object.keys(result)
                 // console.log(result)
                 // console.log(Object.keys(result))
