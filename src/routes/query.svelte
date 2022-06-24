@@ -138,5 +138,37 @@
     </div>
 </div>
 
+{:else if status == 'alg'}
+
+<div class="overflow-x-auto">
+    <table class="table w-full">
+      <thead>
+        <tr>
+          {#each headers as header}
+            <th>{header}</th>
+          {/each}
+        </tr>
+      </thead>
+      <tbody>
+        {#each headers as header}
+            <th>{result[header]}</th>
+        {/each}
+      </tbody>
+    </table>
+</div>
+
+<div class="hero">
+    <div class="hero-content flex-col lg:flex-row">
+      <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202103%2F31%2F20210331002431_ec1bd.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1657530577&t=9a4e64bd350d0a8a33757f300531d2de" class="max-w-sm rounded-lg shadow-2xl mr-8" alt="胡桃"/>
+      <div>
+        <h1 class="text-5xl font-bold underline decoration-sky-500/30 decoration-4">{say}</h1>
+
+        <div class="flex flex-row justify-center items-center">
+            <iframe src={pickedVideo} scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" title="胡桃" class="rounded-lg mt-4 w-[50rem] h-[30rem]"> </iframe>
+        </div>
+        
+      </div>
+    </div>
+</div>
 
 {/if}
