@@ -26,6 +26,7 @@
 				result = response.data.data
                 status = course
                 headers = Object.keys(result)
+                totalScore = result['总分']
                 // console.log(result)
                 // console.log(Object.keys(result))
 			} else {
@@ -124,7 +125,10 @@
     </table>
 </div>
 
-<div class="hero">
+
+<h1 class="text-5xl font-bold underline decoration-sky-500/30 decoration-4">如有疑问，请直接联系任课老师</h1>
+
+<!-- <div class="hero">
     <div class="hero-content flex-col lg:flex-row">
       <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202103%2F31%2F20210331002431_ec1bd.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1657530577&t=9a4e64bd350d0a8a33757f300531d2de" class="max-w-sm rounded-lg shadow-2xl mr-8" alt="胡桃"/>
       <div>
@@ -136,7 +140,7 @@
         
       </div>
     </div>
-</div>
+</div> -->
 
 {:else if status == 'alg'}
 
