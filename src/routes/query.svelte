@@ -98,7 +98,7 @@
         <div class="stat">
           <div class="stat-title">{course} 总分</div>
           <div class="stat-value">{totalScore}</div>
-          <div class="stat-desc">如有疑问请联系助教</div>
+          <div class="stat-desc">如有疑问请联系老师</div>
         </div>
         
     </div>
